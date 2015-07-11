@@ -1,0 +1,234 @@
+
+Navigation
+----------
+l         -> move one character right
+h         -> move one character left
+j         -> move one line down
+k         -> move one line up
+w         -> move foward one word
+b         -> move backword one word
+ctrl-f    -> move forward one page
+ctrl-b    -> move backword one page
+ctrl-e    -> move page forward one line but leave cursor in place
+ctrl-y    -> move page backward one line but leave cursor in place
+^         -> move the cursor to the beginning of the line
+$         -> move the cursor to the end of the line
+G         -> goto the end of a file
+1G or :1  -> goto the beginning of a file
+#G or :#  -> goto a particular line in a file where # is the line number
+H         -> move the cursor to the beginning of the page
+M         -> move the cursor to the middle of the page
+L         -> move the cursor to the end of the page
+/string   -> search for string starting from the current point forward, stay in cmd mode
+?string   -> search for string starting from the current point backward, stay in cmd mode
+n         -> search again (forward)
+N         -> search again (backward)
+fC        -> find char C to right of cursor on current line
+FC        -> find char C to left of cursor on current line
+]m        -> go to start of next method
+[m        -> go to start of previous method
+]M        -> go to end of next method
+[M        -> go to end of previous method
+[[        -> goto the previous function definition in C/C++.
+             only works if the brace is at the beginning of the line
+]]        -> goto the next function definition in C/C++.
+             only works if the brace is at the beginning of the line
+}         -> goto the next blank line
+{         -> goto the previous blank line
+%         -> brace/bracket/paren match
+zz        -> center the current line on the screen, leave cursor on that line
+zt        -> move current line to top of screen, leave cursor on that line
+zb        -> move current line to bottom of screen, leave cursor on that line
+
+Edit Mode
+---------
+i    -> move into insert mode at the cursor position
+a    -> move into insert mode after the cursor position
+I    -> move into insert mode at the beginning of the ine
+A    -> move into insert mode after the end of the line
+o    -> open a new line after the current line
+O    -> open a new line before the current line
+s    -> delete the character at the current point and leave in insert mode
+#s   -> delete the next # character from the current point and leave in insert mode
+cw   -> delete the next word and leave in insert mode
+#cw  -> delete the next # words and leave in insert mode
+c$   -> delete to the end of the line and leave in insert mode
+c^   -> delete to the end of the line and leave in insert mode
+r    -> replace mode
+R    -> replace mode
+ESC  -> leave edit mode
+
+Commands
+--------
+.     -> repeat the last edit
+u     -> undo the last edit
+xp    -> transpose the current character and the next character.
+         this works because the character deleted by x is put into
+         the default buffer and p puts the contents of the default
+         buffer after the current point.
+mC    -> set a Mark, wher C is any single character to name the Mark
+'C    -> goto Mark, whre C is the single character name of the Mark
+Y     -> yank a single line into the default buffer
+"XY   -> Yank a single line into a named buffer, where X is a single
+         character buffer name. Buffers are used to move text rom one
+         file to another.
+yw    -> yank word
+#yw    -> yank # words
+y'C   -> Yank from the current point to a mark, where C is the single
+         character mark name.
+"Xy'C -> Yank from the current point to a mark, where C is the single
+         character mark name and X is the single character buffer
+         name.  Buffers are used to move text from one file to another.
+yG    -> Yank from the current position to the end of the file into
+         the default buffer
+"XyG  -> Yank from the current position to the end of the file into
+         a named buffer where X is the single character buffer name.
+#Y    -> Yank from the current position, the next # lines into the
+         default buffer
+"X#Y  -> Yank from the the current position, the next # lines into
+         a named buffer, X, where X is a single character buffer name
+p     -> put, whatever is in the default buffer, AFTER the current point
+P     -> put, whatever is in the default buffer, BEFORE the current point
+"Xp   -> put, whatever is in the buffer named by the character X,
+         AFTER the current point
+"XP   -> put, whatever is in the buffer named by the character X,
+         BEFORE the current point
+>>    -> shift the current line to the right by the preset shiftwidth
+<<    -> shift the current line to the left by the preset shiftwidth
+>'C   -> shift text, from the current point to the mark, to the right
+         by the preset shiftwidth
+<'C   -> shift text, from the current point to the mark, to the left
+         by the preset shiftwidth
+x     -> delete character at cursor, stay in cmd mode
+#x    -> delete # character starting at cursor, stay in cmd mode
+dw    -> delete the next word, stay in cmd mode
+#dw   -> delete the next # words, stay in cmd mode
+d$    -> delete to the end of the line, stay in cmd mode
+d^    -> delete to the start of the line, stay in cmd mode
+d'C   -> delete from the current point to a mark, where C is the single
+         character mark name.
+dd    -> delete the current line, the current line is put into the default buffer, stay in cmd mode
+#dd   -> delete the next # lines, these lines are put into the default buffer, stay in cmd mode
+dG    -> delete to the end of the file including the current line
+~     -> change case of the current character and move cursor to the next character
+#~    -> change case of the next # characters
+J     -> join the current and next line
+
+Identifier Completion
+---------------------
+ctrl-p
+ctrl-n -> complete the current identifier by searching the current file, 
+          other buffers, and files specified by the dictionary option.
+
+Ex Commands
+-----------
+:w      -> save the current state of the file to disk
+:wq     -> save the current state of the file to disk and quit the editor
+:w %.sv -> save the current state of the file to a new file with .sv
+           appended to the name of the current file
+:e foo  -> edit another file called foo
+:e #    -> edit the last file edited
+:e!     -> discard edits and reload file from disk
+:n      -> edit the next file, useful when vi is started with multiple 
+           files on the cmd line
+:r foo  -> read the contents of the file called foo into the current file
+           after the cursor
+:1,$s/bozo/hoser/g -> substitute bozo with hoser throughout the entire file
+:%s/bozo/hoser/g   -> substitute bozo with hoser throughout the entire file
+                      You can do some powerfull things with regular 
+                      expression here
+:g/expression/d    -> delete lines that match expression
+%                  -> in ex mode, % expands to the current file name
+#                  -> in ex mode, # to the last file edited
+:syntax on         -> turn on  syntax highlighting
+:syntax off        -> turn off syntax highlighting
+
+
+Shelling out
+------------
+!'Msort    - ASCII sort the lines from the current position to the mark M using the
+             Unix sort command
+!'Msort -n - numeric sort the lines from the current position to the mark M using the
+             Unix sort command
+:.,$!sort
+!Gsort     - sort from the current position to the end of the file
+!'Mindent  - indent the lines from the current position to the mark M using
+             the Unix indent command
+
+vim windows
+-----------
+ctrl-w ctrl-n
+:split          - create a new horizontal window
+ctrl-w ctrl-v
+:vsplit         - create a new vertical window
+ctrl-w ctrl-w   - move cursor to next window
+ctrl-w up       - move cursor to the window above
+ctrl-w down     - move cursor to the window below
+ctrl-w +        - increase the size of the current window
+ctrl-w =        - make all windows the same size
+
+.vimrc settings
+---------------
+    set nocompatible    " use vim extensions
+    set ai              " autoindent
+    set ic              " ignore case
+    set ts=4            " tab stop every 4 characters
+    set sw=4            " shift width 4 characters, see >>, <<
+    set expandtab       " don't use tab characters
+    set history=50      " keep 50 lines of command line history
+    set ruler           " show the cursor position all the time
+    set showcmd         " display incomplete commands
+    set incsearch       " do incremental searching
+    " Switch syntax highlighting on, when the terminal has colors
+    " Also switch on highlighting the last used search pattern.
+    if &t_Co > 2 || has("gui_running")
+      syntax on         " turn on syntax highlighting
+      set hlsearch      " highlight searches
+    endif
+
+New Line Problems
+-----------------
+    On the Mac, we have some log files that always come up with the ^M and 
+    the end of lines and all lines concatenated together.  The cr2nl shell 
+    script fixes it and a I just found another way to fix it from the : 
+    prompt.
+
+    :e ++ff=mac
+
+    From the command line using a script
+        cr2nl
+        #!/bin/sh
+        tr -s "\r" "\n"
+
+    Use global substitute
+        :1,$s/^M/^M/g
+
+
+CVS Plugin
+----------
+You can also get a CVS plugin for vim 6.0 at http://www.vim.org/scripts/download_script.php?src_id=5302.
+The following commands are available from the Ex prompt, :.
+
+CVSAdd
+CVSAnnotate
+CVSCommit
+CVSDiff
+CVSDisableBufferSetup
+CVSEdit
+CVSEditors
+CVSEnableBufferSetup
+CVSGotoOriginal
+CVSLog
+CVSReload
+CVSRevert
+CVSReview
+CVSStatus
+CVSUnedit
+CVSUpdate
+CVSVimDiff
+CVSWatch
+CVSWatchAdd
+CVSWatchOff
+CVSWatchOn
+CVSWatchRemove
+CVSWatchers
